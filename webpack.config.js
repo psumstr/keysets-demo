@@ -24,6 +24,8 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             title: 'React Template',
+            template: './src/index.html',
+            inject: true
         }),
     ],
 };
