@@ -2,7 +2,10 @@
   "name": "react-template",
   "version": "0.1.0",
   "description": "The default configuration to get started with React and Webpack",
-  "scripts": {},
+  "scripts": {
+    "start": "webpack-dev-server --env development",
+    "build": "webpack --env production"
+  },
   "keywords": [],
   "author": "Jonathan Avila <avilajonathan@gmail.com>",
   "license": "MIT",
