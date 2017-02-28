@@ -1,0 +1,10 @@
+{
+  "name": "react-template",
+  "version": "0.1.0",
+  "description": "The default configuration to get started with React and Webpack",
+  "scripts": {
+  },
+  "keywords": [],
+  "author": "Jonathan Avila <avilajonathan@gmail.com>",
+  "license": "MIT"
+}
