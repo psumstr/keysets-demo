@@ -39,6 +39,12 @@ const productionConfig = merge([
   parts.purifyCSS({
     paths: glob.sync(path.join(PATHS.app, '**', '*')),
   }),
+  parts.loadImages({
+    options: {
+      limit: 15000,
+      name: '[hash:8].[ext]',
+    },
+  }),
 ]);
 
 const developmentConfig = merge([
@@ -53,6 +59,7 @@ const developmentConfig = merge([
     port: process.env.PORT,
   }),
   parts.loadCSS(),
+  parts.loadImages(),
 ]);
 
 module.exports = function(env) {
