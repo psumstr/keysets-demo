@@ -45,6 +45,13 @@ const productionConfig = merge([
       maxEntrypointSize: 100000, // in bytes
       maxAssetSize: 450000, // in bytes
     },
+    output: {
+      chunkFilename: '[name].[chunkhash:8].js',
+      filename: '[name].[chunkhash:8].js',
+    },
+    plugins: [
+      new webpack.HashedModuleIdsPlugin(),
+    ],
   },
   parts.clean(PATHS.build),
   parts.minifyJavaScript(),
