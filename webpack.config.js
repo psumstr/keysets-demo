@@ -86,6 +86,10 @@ const productionConfig = merge([
       name: '[hash:8].[ext]',
     },
   }),
+  parts.setFreeVariable(
+    'process.env.NODE_ENV',
+    'production'
+  ),
 ]);
 
 const developmentConfig = merge([
