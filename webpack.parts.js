@@ -1,4 +1,6 @@
 const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const PurifyCSSPlugin = require('purifycss-webpack');
 
 exports.devServer = function({ host, port } = {}) {
   return {
@@ -31,6 +33,91 @@ exports.lintJavaScript = function({ include, exclude, options }) {
 
           loader: 'eslint-loader',
           options,
+        },
+      ],
+    },
+  };
+};
+
+exports.loadCSS = function({ include, exclude } = {}) {
+  return {
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          include,
+          exclude,
+
+          use: ['style-loader', 'css-loader'],
+        },
+      ],
+    },
+  };
+};
+
+exports.extractCSS = function({ include, exclude, use }) {
+  // Output extracted CSS to a file
+  const plugin = new ExtractTextPlugin({
+    filename: '[name].[contenthash:8].css',
+  });
+
+  return {
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          include,
+          exclude,
+
+          use: plugin.extract({
+            use,
+            fallback: 'style-loader',
+          }),
+        },
+      ],
+    },
+    plugins: [ plugin ],
+  };
+};
+
+exports.autoprefix = function() {
+  return {
+    loader: 'postcss-loader',
+    options: {
+      plugins: () => ([
+        require('autoprefixer'),
+      ]),
+    },
+  };
+};
+
+exports.purifyCSS = function({ paths }) {
+  return {
+    plugins: [
+      new PurifyCSSPlugin({ paths }),
+    ],
+  };
+};
+
+exports.lintCSS = function({ include, exclude }) {
+  return {
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          include,
+          exclude,
+          enforce: 'pre',
+
+          loader: 'postcss-loader',
+          options: {
+            plugins: () => ([
+              require('stylelint')({
+                // Ignore node_modules CSS
+                ignoreFiles: 'node_modules/**/*.css',
+              }),
+            ]),
+          },
         },
       ],
     },
