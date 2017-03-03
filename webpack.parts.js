@@ -129,7 +129,7 @@ exports.loadImages = function({ include, exclude, options } = {}) {
     module: {
       rules: [
         {
-          test: /\.(png|jpg)$/,
+          test: /\.(png|jpg|svg)$/,
           include,
           exclude,
 
@@ -148,8 +148,8 @@ exports.loadFonts = function({ include, exclude, options } = {}) {
     module: {
       rules: [
         {
-          // Capture eot, ttf, svg, woff, and woff2
-          test: /\.(woff2?|ttf|svg|eot)(\?v=\d+\.\d+\.\d+)?$/,
+          // Capture eot, ttf, woff, and woff2
+          test: /\.(woff2?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
           include,
           exclude,
 
