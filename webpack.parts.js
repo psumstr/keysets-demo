@@ -163,6 +163,12 @@ exports.loadFonts = function({ include, exclude, options } = {}) {
   };
 };
 
+exports.generateSourceMaps = function({ type }) {
+  return {
+    devtool: type,
+  };
+};
+
 exports.loadJavaScript = function({ include, exclude }) {
   return {
     module: {

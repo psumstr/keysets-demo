@@ -39,6 +39,7 @@ const commonConfig = merge([
 ]);
 
 const productionConfig = merge([
+  parts.generateSourceMaps({ type: 'source-map' }),
   parts.extractCSS({
     use: ['css-loader', parts.autoprefix()],
   }),
@@ -55,10 +56,14 @@ const productionConfig = merge([
 
 const developmentConfig = merge([
   {
+    output: {
+      devtoolModuleFilenameTemplate: 'webpack:///[absolute-resource-path]',
+    },
     plugins: [
       new webpack.NamedModulesPlugin(),
     ],
   },
+  parts.generateSourceMaps({ type: 'cheap-module-eval-source-map' }),
   parts.devServer({
     // Customize host/port here if needed
     host: process.env.HOST,
