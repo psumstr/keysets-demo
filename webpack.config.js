@@ -39,6 +39,20 @@ const commonConfig = merge([
 ]);
 
 const productionConfig = merge([
+  parts.extractBundles([
+    {
+      name: 'vendor',
+      minChunks: ({ resource }) => (
+        resource &&
+        resource.indexOf('node_modules') >= 0 &&
+        resource.match(/\.js$/)
+      ),
+    },
+    {
+      name: 'manifest',
+      minChunks: Infinity,
+    },
+  ]),
   parts.generateSourceMaps({ type: 'source-map' }),
   parts.extractCSS({
     use: ['css-loader', parts.autoprefix()],

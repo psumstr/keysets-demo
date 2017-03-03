@@ -169,6 +169,14 @@ exports.generateSourceMaps = function({ type }) {
   };
 };
 
+exports.extractBundles = function(bundles) {
+  return {
+    plugins: bundles.map((bundle) => (
+      new webpack.optimize.CommonsChunkPlugin(bundle)
+    )),
+  };
+};
+
 exports.loadJavaScript = function({ include, exclude }) {
   return {
     module: {
