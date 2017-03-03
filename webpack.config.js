@@ -20,6 +20,10 @@ const commonConfig = merge([
       path: PATHS.build,
       filename: '[name].js',
     },
+    resolve: {
+      // Add '.ts' and '.tsx' as resolvable extensions.
+      extensions: [".ts", ".tsx", ".js"]
+    },
     plugins: [
       new HtmlWebpackPlugin({
         title: 'React Template',
@@ -36,6 +40,7 @@ const commonConfig = merge([
     },
   }),
   parts.loadJavaScript({ include: PATHS.app }),
+  parts.loadTypeScript({ include: PATHS.app })
 ]);
 
 const productionConfig = merge([

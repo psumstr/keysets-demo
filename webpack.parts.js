@@ -190,7 +190,6 @@ exports.loadJavaScript = function({ include, exclude }) {
           test: /\.js$/,
           include,
           exclude,
-
           loader: 'babel-loader',
           options: {
             // Enable caching for improved performance during
@@ -204,6 +203,27 @@ exports.loadJavaScript = function({ include, exclude }) {
       ],
     },
   };
+};
+
+exports.loadTypeScript = function({ include, exclude }) {
+  return {
+    module: {
+      rules: [
+        {
+          test: /\.tsx$/,
+          include,
+          exclude,
+          loader: 'awesome-typescript-loader'
+        },
+        {
+          test: /\.js$/,
+          include,
+          exclude,
+          loader: 'source-map-loader'
+        }
+      ]
+    }
+  }
 };
 
 exports.clean = function(path) {
