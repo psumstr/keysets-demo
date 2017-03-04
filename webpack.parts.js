@@ -35,7 +35,6 @@ exports.lintJavaScript = function({ include, exclude, options }) {
           include,
           exclude,
           enforce: 'pre',
-
           loader: 'eslint-loader',
           options,
         },
@@ -52,8 +51,7 @@ exports.loadCSS = function({ include, exclude } = {}) {
           test: /\.css$/,
           include,
           exclude,
-
-          use: ['style-loader', 'css-loader'],
+          use: ['style-loader','css-loader'],
         },
       ],
     },
@@ -73,7 +71,6 @@ exports.extractCSS = function({ include, exclude, use }) {
           test: /\.css$/,
           include,
           exclude,
-
           use: plugin.extract({
             use,
             fallback: 'style-loader',
@@ -113,7 +110,6 @@ exports.lintCSS = function({ include, exclude }) {
           include,
           exclude,
           enforce: 'pre',
-
           loader: 'postcss-loader',
           options: {
             plugins: () => ([
@@ -137,7 +133,6 @@ exports.loadImages = function({ include, exclude, options } = {}) {
           test: /\.(png|jpg|svg)$/,
           include,
           exclude,
-
           use: {
             loader: 'url-loader',
             options,
@@ -157,7 +152,6 @@ exports.loadFonts = function({ include, exclude, options } = {}) {
           test: /\.(eot|ttf|woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
           include,
           exclude,
-
           use: {
             loader: 'file-loader',
             options,

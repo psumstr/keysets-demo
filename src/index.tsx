@@ -3,11 +3,11 @@ import './main.css';
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Hello } from "./components/Hello";
+import Navbar from "./components/Navbar";
 
 const root = document.getElementById('root');
 
 ReactDOM.render(
-    <Hello compiler="TypeScript" framework="React" />,
+    <Navbar />,
   root
 );

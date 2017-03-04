@@ -96,7 +96,7 @@ const productionConfig = merge([
   parts.loadImages({
     options: {
       limit: 15000,
-      name: '[hash:8].[ext]',
+      name: '[name].[hash:8].[ext]',
     },
   }),
   parts.setFreeVariable(
