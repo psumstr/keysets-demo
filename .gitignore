@@ -2,3 +2,4 @@
 *.log
 .eslintcache
 build/*
+records.json
