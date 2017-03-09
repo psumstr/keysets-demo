@@ -181,7 +181,7 @@ exports.loadJavaScript = function({ include, exclude }) {
     module: {
       rules: [
         {
-          test: /\.js$/,
+          test: /\.jsx?$/,
           include,
           exclude,
           loader: 'babel-loader',
@@ -204,7 +204,7 @@ exports.loadTypeScript = function({ include, exclude }) {
     module: {
       rules: [
         {
-          test: /\.tsx$/,
+          test: /\.tsx?$/,
           include,
           exclude,
           loader: 'awesome-typescript-loader'

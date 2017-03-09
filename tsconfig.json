@@ -2,6 +2,9 @@
     "compilerOptions": {
         "outDir": "./build/",
         "sourceMap": true,
+        "strictNullChecks": true,
+        "noImplicitReturns": true,
+        "noImplicitUseStrict": true,
         "noImplicitAny": true,
         "module": "commonjs",
         "target": "es5",

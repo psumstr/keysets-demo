@@ -40,7 +40,8 @@ const commonConfig = merge([
     },
   }),
   parts.loadJavaScript({ include: PATHS.app }),
-  parts.loadTypeScript({ include: PATHS.app })
+  parts.loadTypeScript({ include: PATHS.app }),
+  { externals: { ZoomdataSDK: "ZoomdataSDK" } },
 ]);
 
 const productionConfig = merge([
