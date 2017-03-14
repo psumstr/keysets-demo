@@ -26,7 +26,7 @@ const commonConfig = merge([
     },
     plugins: [
       new HtmlWebpackPlugin({
-        title: 'React Template',
+        title: 'Keysets Demo',
         template: './src/index.html',
         inject: true,
       }),

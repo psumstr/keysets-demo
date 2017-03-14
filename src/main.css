@@ -2,19 +2,55 @@
 @import "~react-grid-layout/css/styles.css";
 @import "~react-resizable/css/styles.css";
 
-.react-grid-layout {
-  background: #eee;
+html,
+body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
 }
 
-.react-grid-item {
+#root,
+#root > div {
+  height: 100%;
+}
+
+.container {
+  overflow: hidden;
+  justify-content: center;
+  height: calc(100% - 50px);
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.container > div.box > div.widgetHeader {
+  display: flex;
+  margin: 5px;
+  height: 25px;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+.container > div.box {
+  margin: 10px;
   box-sizing: border-box;
-}
-
-.react-grid-item:not(.react-grid-placeholder) {
-  background: #ccc;
   border: 1px solid black;
+  overflow: hidden;
+  display: flex;
+  flex: 0 1 calc(50% - 20px);
+  height: calc(100% - 45px);
+  flex-direction: column;
 }
 
-.react-grid-item.resizing {
-  opacity: 0.9;
+.container > div.box > div.widgetBody {
+  height: calc(100% - 25px);
+  width: 100%;
+  display: flex;
+  flex-shrink: 0;
+}
+
+.container > div.box > div.widgetBody > div.chart {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-shrink: 0;
 }

@@ -18,5 +18,13 @@ declare module 'ZoomdataSDK' {
     application: IApplication
   }
 
+  interface IQueryConfig {
+    filters: Array<object>;
+    groups: Array<object>;
+    metrics: Array<object>;
+    time?: object | null;
+    player?: object
+  }
+
   function createClient(config: IClientConfig): Promise<any>
 }

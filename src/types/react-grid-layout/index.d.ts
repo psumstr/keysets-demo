@@ -1,6 +1,4 @@
-declare module "react-grid-layout" {
-  import * as React from 'react';
-
+declare module 'react-grid-layout' {
   interface IGridItemProps {
     // Children must be only a single element
     children: React.ReactElement<any>;

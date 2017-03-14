@@ -2,7 +2,7 @@ import {ISecurityKey} from "ZoomdataSDK";
 import {IAccessToken} from "ZoomdataSDK";
 
 const credentials: ISecurityKey | IAccessToken = {
-  key: '58bce1a8e4b0741b4ef1cd82'
+  key: '58c2d8e5e4b0ae772d76d56f'
 };
 
 export default credentials;
