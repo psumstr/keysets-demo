@@ -6,7 +6,7 @@ export interface IWidgetProps {
   zd: any;
   template: string;
   sourceName: string;
-  onVizRender?: Function
+  onVizRender?: Function;
 }
 export default class Widget extends React.Component<IWidgetProps, {}> {
   node: HTMLDivElement;
@@ -36,6 +36,18 @@ export default class Widget extends React.Component<IWidgetProps, {}> {
       if (onVizRender) {
         onVizRender(visualization);
       }
+      visualization.thread.on('thread:start', () => {
+        $(visualization.element).parent().siblings('.widget-header').css('visibility', 'hidden');
+        $(visualization.element).parent().css('visibility', 'hidden');
+        $(visualization.element).css('visibility', 'hidden');
+        $(visualization.element).parent().siblings('.widget-spinner').show();
+      });
+      visualization.thread.on('thread:notDirtyData', () => {
+        $(visualization.element).parent().siblings('.widget-spinner').hide();
+        $(visualization.element).parent().siblings('.widget-header').css('visibility', 'visible');
+        $(visualization.element).parent().css('visibility', 'visible');
+        $(visualization.element).css('visibility', 'visible');
+      });
     }).catch((error: string) => {
       console.log(error);
     })

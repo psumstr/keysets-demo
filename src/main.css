@@ -15,19 +15,11 @@ body {
 }
 
 .container {
-  overflow: hidden;
+  overflow-x: hidden;
   justify-content: center;
   height: calc(100% - 50px);
   display: flex;
   flex-flow: row wrap;
-}
-
-.container > div.box > div.widgetHeader {
-  display: flex;
-  margin: 5px;
-  height: 25px;
-  flex-flow: row nowrap;
-  justify-content: space-between;
 }
 
 .container > div.box {
@@ -37,18 +29,38 @@ body {
   overflow: hidden;
   display: flex;
   flex: 0 1 calc(50% - 20px);
+  min-height: 200px;
+  min-width: 200px;
   height: calc(100% - 45px);
   flex-direction: column;
 }
 
-.container > div.box > div.widgetBody {
+.container > div.box > div.widget-spinner {
+  position: absolute;
+  display: none;
+  align-self: center;
+  top: calc(50% - 50px);
+}
+
+.container > div.box > div.widget-header {
+  visibility: hidden;
+  display: flex;
+  margin: 5px;
+  height: 25px;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+.container > div.box > div.widget-body {
+  visibility: hidden;
   height: calc(100% - 25px);
   width: 100%;
   display: flex;
   flex-shrink: 0;
 }
 
-.container > div.box > div.widgetBody > div.chart {
+.container > div.box > div.widget-body > div.chart {
+  visibility: hidden;
   height: 100%;
   width: 100%;
   display: flex;
