@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { Popover, PopoverInteractionKind, Position } from '@blueprintjs/core';
+import WidgetMenu from "./WidgetMenu";
 
 interface IWidgetTitle {
   title: string;
@@ -11,7 +13,11 @@ export default class WidgetHeader extends React.Component<IWidgetTitle, {}> {
   };
   renderHeaderControls = () => {
     return <div className="widget-header-controls">
-      <button type="button" className="pt-button pt-minimal pt-icon-more"></button>
+      <Popover
+        content={<WidgetMenu />}
+        position={Position.LEFT_BOTTOM} >
+        <button type="button" className="pt-button pt-minimal pt-icon-more"></button>
+      </Popover>
     </div>
   };
   render() {

@@ -10,15 +10,15 @@ interface IWidgetContainerProps extends IWidgetProps{
 
 export default class WidgetContainer extends React.Component<IWidgetContainerProps, {}> {
   render() {
-    const  { className, template, sourceName, zd, onVizRender } = this.props;
+    const  { className, template, sourceName } = this.props;
 
     return <div className={`box ${className}`}>
       <WidgetSpinner />
-      <WidgetHeader title={sourceName} />
-      <WidgetBody zd={zd}
-                  template={template}
-                  sourceName={sourceName}
-                  onVizRender={onVizRender} />
+      <WidgetHeader
+        title={sourceName} />
+      <WidgetBody
+        template={template}
+        sourceName={sourceName} />
     </div>;
   }
 }

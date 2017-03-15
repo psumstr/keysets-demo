@@ -13,9 +13,6 @@ const PATHS = {
 
 const commonConfig = merge([
   {
-    entry: {
-      app: PATHS.app,
-    },
     output: {
       path: PATHS.build,
       filename: '[name].js',
@@ -126,9 +123,17 @@ const developmentConfig = merge([
 ]);
 
 module.exports = function(env) {
+  process.env.BABEL_ENV = env;
+  const config = {
+    entry: {
+      app: env === 'production' ?
+        PATHS.app :
+        ['react-hot-loader/patch', PATHS.app]
+    }
+  };
   if (env === 'production') {
-    return merge(commonConfig, productionConfig);
+    return merge(config, commonConfig, productionConfig);
   }
 
-  return merge(commonConfig, developmentConfig);
+  return merge(config, commonConfig, developmentConfig);
 };

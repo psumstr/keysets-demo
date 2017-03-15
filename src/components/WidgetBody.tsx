@@ -4,12 +4,11 @@ import { IWidgetProps } from "./Widget";
 
 export default class WidgetBody extends React.Component<IWidgetProps, {}> {
   render() {
-    const  { template, sourceName, zd, onVizRender } = this.props;
+    const  { template, sourceName } = this.props;
     return <div className="widget-body">
-      <Widget zd={zd}
-                  template={template}
-                  sourceName={sourceName}
-                  onVizRender={onVizRender} />
+      <Widget
+        template={template}
+        sourceName={sourceName} />
     </div>
   }
 }

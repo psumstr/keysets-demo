@@ -2,6 +2,7 @@
     "compilerOptions": {
         "outDir": "./build/",
         "sourceMap": true,
+        "experimentalDecorators": true,
         "strictNullChecks": true,
         "noImplicitReturns": true,
         "noImplicitUseStrict": true,

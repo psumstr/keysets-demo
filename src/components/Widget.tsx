@@ -1,13 +1,17 @@
 import * as React from 'react';
 import queryConfig from "../zoomdata/queryConfig";
 import {getControlsCfg, getSource, getVisVariables} from "../zoomdata/utils";
+import { inject } from "mobx-react";
+import { IZoomdata } from '../stores/Zoomdata';
 
 export interface IWidgetProps {
-  zd: any;
   template: string;
   sourceName: string;
-  onVizRender?: Function;
+  zoomdata?: IZoomdata
 }
+@inject(stores => ({
+  zoomdata: stores.zoomdata as IZoomdata
+}))
 export default class Widget extends React.Component<IWidgetProps, {}> {
   node: HTMLDivElement;
   componentWillReceiveProps(nextProps: any) {
@@ -19,23 +23,21 @@ export default class Widget extends React.Component<IWidgetProps, {}> {
     return false;
   }
   componentDidMount() {
-    const { zd, template, sourceName, onVizRender } = this.props;
-    const source = getSource(zd.sources, sourceName);
+    const { zoomdata, template, sourceName } = this.props;
+    const source = zoomdata && getSource(zoomdata.sources, sourceName);
     const controlsCfg = getControlsCfg(source);
     const visVariables = getVisVariables(source, template);
     queryConfig.time = controlsCfg.timeControlCfg;
     queryConfig.player = controlsCfg.playerControlCfg;
 
-    zd.client.visualize({
+    zoomdata && zoomdata.client.visualize({
       element: this.node,
       config: queryConfig,
       source,
       visualization: template,
       variables: visVariables
     }).then((visualization: any) => {
-      if (onVizRender) {
-        onVizRender(visualization);
-      }
+      zoomdata.visualizations.push(visualization);
       visualization.thread.on('thread:start', () => {
         $(visualization.element).parent().siblings('.widget-header').css('visibility', 'hidden');
         $(visualization.element).parent().css('visibility', 'hidden');
