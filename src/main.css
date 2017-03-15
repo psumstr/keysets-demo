@@ -46,14 +46,14 @@ body {
   visibility: hidden;
   display: flex;
   margin: 5px;
-  height: 25px;
+  min-height: 30px;
   flex-flow: row nowrap;
   justify-content: space-between;
 }
 
 .container > div.box > div.widget-body {
   visibility: hidden;
-  height: calc(100% - 25px);
+  height: calc(100% - 30px);
   width: 100%;
   display: flex;
   flex-shrink: 0;
