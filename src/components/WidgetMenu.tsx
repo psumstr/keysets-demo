@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Menu, MenuItem, Intent} from '@blueprintjs/core';
+import { Menu, MenuItem } from '@blueprintjs/core';
 
 export default class WidgetMenu extends React.Component<{}, {}> {
   render() {

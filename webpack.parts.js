@@ -207,7 +207,7 @@ exports.loadTypeScript = function({ include, exclude }) {
           test: /\.tsx?$/,
           include,
           exclude,
-          loader: 'awesome-typescript-loader'
+          use: ['react-hot-loader/webpack', 'awesome-typescript-loader']
         },
         {
           test: /\.js$/,

@@ -2,13 +2,13 @@ import * as React from 'react';
 import Navbar from './Navbar';
 import WidgetGrid from './WidgetGrid';
 
-const App = () => {
-  return (
+export default class App extends React.Component<{}, {}> {
+  render() {
+    return (
       <div>
-          <Navbar />
-          <WidgetGrid />
+        <Navbar />
+        <WidgetGrid />
       </div>
-  )
+    )
+  }
 };
-
-export default App;
