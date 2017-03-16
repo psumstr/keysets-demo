@@ -8,7 +8,7 @@ export interface IZoomdata {
   visualizations: Array<any>;
 }
 
-export class Zoomdata implements IZoomdata {
+export default class Zoomdata implements IZoomdata {
   @observable client = {};
   @observable.shallow sources = [];
   @observable.shallow visualizations = [];

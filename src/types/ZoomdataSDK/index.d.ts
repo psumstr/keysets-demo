@@ -26,5 +26,10 @@ declare module 'ZoomdataSDK' {
     player?: object
   }
 
+  interface IFilter {
+    path: string;
+    operation: string;
+    values: Array<string | number>
+  }
   function createClient(config: IClientConfig): Promise<any>
 }
