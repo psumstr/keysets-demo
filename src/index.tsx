@@ -1,4 +1,5 @@
 import './main.css';
+import "@blueprintjs/core/dist/blueprint.css";
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';

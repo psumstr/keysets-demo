@@ -88,9 +88,12 @@ const productionConfig = merge([
   parts.extractCSS({
     use: ['css-loader', parts.autoprefix()],
   }),
-  parts.purifyCSS({
-    paths: glob.sync(path.join(PATHS.app, '**', '*')),
-  }),
+  // parts.purifyCSS({
+  //   paths: glob.sync(
+  //     path.join(PATHS.app, '**', '*'),
+  //     { nodir: true }
+  //   ),
+  // }),
   parts.loadImages({
     options: {
       limit: 15000,
