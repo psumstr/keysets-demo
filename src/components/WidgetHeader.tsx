@@ -1,17 +1,18 @@
 import * as React from 'react';
-import { Popover, Position } from '@blueprintjs/core';
+import { Popover, Position, Button } from '@blueprintjs/core';
 import WidgetMenu from "./WidgetMenu";
 import { inject, observer } from "mobx-react";
 import ActiveFiltersMenu from "./ActiveFiltersMenu";
-import { IWidgetMenu, MenuItems } from "./WidgetContainer";
+import { IWidgetStore, MenuItems } from "./WidgetContainer";
+import AddFilterMenu from "./AddFilterMenu";
 
 interface IWidgetTitle {
   title: string;
-  menuStore?: IWidgetMenu
+  widgetStore?: IWidgetStore
 }
 
 @inject(stores => ({
-  menuStore: stores.menuStore as IWidgetMenu
+  widgetStore: stores.widgetStore as IWidgetStore
 }))
 @observer
 export default class WidgetHeader extends React.Component<IWidgetTitle, {}> {
@@ -20,11 +21,14 @@ export default class WidgetHeader extends React.Component<IWidgetTitle, {}> {
     return <div className="widget-title">{title}</div>
   };
   getPopoverContent = () => {
-    const { menuStore } = this.props;
+    const { widgetStore } = this.props;
     let content;
-    switch (menuStore && menuStore.selected) {
+    switch (widgetStore && widgetStore.selected) {
       case MenuItems.FILTERS:
         content = <ActiveFiltersMenu />;
+        break;
+      case MenuItems.ADDFILTER:
+        content = <AddFilterMenu />;
         break;
       case MenuItems.NONE:
       default:
@@ -35,8 +39,8 @@ export default class WidgetHeader extends React.Component<IWidgetTitle, {}> {
   };
 
   onPopoverClose = () => {
-    const { menuStore } = this.props;
-    menuStore && (menuStore.selected = MenuItems.NONE);
+    const { widgetStore } = this.props;
+    widgetStore && (widgetStore.selected = MenuItems.NONE);
   };
 
   renderHeaderControls = () => {
@@ -47,7 +51,9 @@ export default class WidgetHeader extends React.Component<IWidgetTitle, {}> {
         content={this.getPopoverContent()}
         onClose={this.onPopoverClose}
         position={Position.LEFT_TOP} >
-        <button type="button" className="pt-button pt-minimal pt-icon-more"></button>
+        <Button
+          className="pt-minimal"
+          iconName="more" />
       </Popover>
     </div>
   };

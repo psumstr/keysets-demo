@@ -1,21 +1,26 @@
 import * as React from 'react';
 import { Menu, Button, Intent } from "@blueprintjs/core";
-import {MenuItems, IWidgetMenu} from "./WidgetContainer";
+import {MenuItems, IWidgetStore} from "./WidgetContainer";
 import { inject } from "mobx-react";
 
 @inject(stores => ({
-  menuStore: stores.menuStore as IWidgetMenu
+  widgetStore: stores.widgetStore as IWidgetStore
 }))
-export default class ActiveFiltersMenu extends React.Component<{menuStore?: IWidgetMenu}, {}> {
+export default class ActiveFiltersMenu extends React.Component<{widgetStore?: IWidgetStore}, {}> {
   onBackButtonClick = () => {
-    const { menuStore } = this.props;
-    menuStore && (menuStore.selected = MenuItems.NONE);
+    const { widgetStore } = this.props;
+    widgetStore && (widgetStore.selected = MenuItems.NONE);
+  };
+
+  onAddFilterClick = () => {
+    const { widgetStore } = this.props;
+    widgetStore && (widgetStore.selected = MenuItems.ADDFILTER);
   };
 
   render() {
     return (
       <Menu>
-        <div>
+        <h6>
           <Button
             className="pt-minimal"
             intent={Intent.PRIMARY}
@@ -23,10 +28,11 @@ export default class ActiveFiltersMenu extends React.Component<{menuStore?: IWid
             iconName="chevron-left" >
           </Button>
           Active Filters
-        </div>
+        </h6>
         <Button
           className="pt-fill"
           intent={Intent.PRIMARY}
+          onClick={this.onAddFilterClick}
           text="Add Filter">
         </Button>
       </Menu>

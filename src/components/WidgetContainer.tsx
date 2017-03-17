@@ -10,16 +10,18 @@ import {observer, Provider} from "mobx-react";
 export enum MenuItems {
   NONE,
   FILTERS,
+  ADDFILTER,
   KEYSETS
 }
 
-export interface IFiltersWidgetMenu {
+export interface IFiltersMenu {
   list: Array<IFilter>;
 }
-export interface IWidgetMenu {
+export interface IWidgetStore {
+  source: any
   className: string;
   selected: MenuItems;
-  filters: IFiltersWidgetMenu;
+  filters: IFiltersMenu;
 }
 
 interface IWidgetContainerProps extends IWidgetProps{
@@ -28,7 +30,8 @@ interface IWidgetContainerProps extends IWidgetProps{
 
 @observer
 export default class WidgetContainer extends React.Component<IWidgetContainerProps, {}> {
-  @observable menuStore: IWidgetMenu = {
+  @observable widgetStore: IWidgetStore = {
+    source: observable.shallow({}),
     className: '',
     selected: MenuItems.NONE,
     filters: {
@@ -37,20 +40,22 @@ export default class WidgetContainer extends React.Component<IWidgetContainerPro
   };
   constructor(props: IWidgetContainerProps) {
     super(props);
-    this.menuStore.className = props.className;
+    this.widgetStore.className = props.className;
   }
   render() {
     const  { className, template, sourceName } = this.props;
 
-    return <div className={`box ${className}`}>
-      <WidgetSpinner />
-      <Provider menuStore={this.menuStore}>
-        <WidgetHeader
-          title={sourceName} />
+    return (
+      <Provider widgetStore={this.widgetStore}>
+        <div className={`box ${className}`}>
+          <WidgetSpinner />
+            <WidgetHeader
+              title={sourceName} />
+          <WidgetBody
+            template={template}
+            sourceName={sourceName} />
+        </div>
       </Provider>
-      <WidgetBody
-        template={template}
-        sourceName={sourceName} />
-    </div>;
+    );
   }
 }

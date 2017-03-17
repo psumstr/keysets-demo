@@ -1,16 +1,19 @@
 import * as React from 'react';
 import queryConfig from "../zoomdata/queryConfig";
-import {getControlsCfg, getSource, getVisVariables} from "../zoomdata/utils";
+import { getControlsCfg, getSource, getVisVariables } from "../zoomdata/utils";
 import { inject } from "mobx-react";
 import { IZoomdata } from '../stores/Zoomdata';
+import { IWidgetStore } from "./WidgetContainer";
 
 export interface IWidgetProps {
   template: string;
   sourceName: string;
-  zoomdata?: IZoomdata
+  zoomdata?: IZoomdata;
+  widgetStore?: IWidgetStore;
 }
 @inject(stores => ({
-  zoomdata: stores.zoomdata as IZoomdata
+  zoomdata: stores.zoomdata as IZoomdata,
+  widgetStore: stores.widgetStore as IWidgetStore
 }))
 export default class Widget extends React.Component<IWidgetProps, {}> {
   node: HTMLDivElement;
@@ -23,8 +26,9 @@ export default class Widget extends React.Component<IWidgetProps, {}> {
     return false;
   }
   componentDidMount() {
-    const { zoomdata, template, sourceName } = this.props;
-    const source = zoomdata && getSource(zoomdata.sources, sourceName);
+    const { zoomdata, widgetStore, template, sourceName } = this.props;
+    const source = zoomdata && (getSource(zoomdata.sources, sourceName));
+    widgetStore && (widgetStore.source = source);
     const controlsCfg = getControlsCfg(source);
     const visVariables = getVisVariables(source, template);
     queryConfig.time = controlsCfg.timeControlCfg;
