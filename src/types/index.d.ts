@@ -1,2 +1,2 @@
-/// <reference path="react-grid-layout/index.d.ts" />
+/// <reference path="ZoomdataSDK/index.d.ts" />
 declare module "*";
