@@ -5,7 +5,7 @@ import { IWidgetProps } from "./Widget";
 import WidgetSpinner from "./WidgetSpinner";
 import { IFilter } from "ZoomdataSDK";
 import { observable } from "mobx";
-import {observer, Provider} from "mobx-react";
+import { observer, Provider } from "mobx-react";
 
 export enum MenuItems {
   NONE,

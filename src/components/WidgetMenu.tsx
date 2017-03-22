@@ -2,14 +2,17 @@ import * as React from 'react';
 import {Menu, MenuItem } from '@blueprintjs/core';
 import { inject } from "mobx-react";
 import { IWidgetStore, MenuItems } from "./WidgetContainer";
+import { action } from "mobx";
 
 @inject(stores => ({
   widgetStore: stores.widgetStore as IWidgetStore
 }))
 export default class WidgetMenu extends React.Component<{widgetStore?: IWidgetStore}, {}> {
-  onFiltersClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  @action('show the "active filters" menu') onFiltersClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { widgetStore } = this.props;
-    widgetStore && (widgetStore.menu.active = MenuItems.FILTERS);
+    if (widgetStore) {
+      widgetStore.menu.active = MenuItems.FILTERS;
+    }
   };
   render() {
     return (

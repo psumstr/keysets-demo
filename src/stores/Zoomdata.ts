@@ -1,6 +1,6 @@
 import * as ZoomdataSDK from 'ZoomdataSDK';
 import { credentials, application } from '../zoomdata';
-import { observable } from "mobx";
+import { observable, runInAction } from "mobx";
 
 export interface IZoomdata {
   client: any;
@@ -22,8 +22,10 @@ export default class Zoomdata implements IZoomdata {
         await client.sources.update({name: sourceNames[0]});
         await client.sources.update({name: sourceNames[1]});
         const sources = await client.sources.fetch();
-        instance.client = client;
-        instance.sources = sources;
+        runInAction('update state with Zoomdata client and sources', () => {
+          instance.client = client;
+          instance.sources = sources;
+        });
       }
       catch(err) {
         console.log(err.message);

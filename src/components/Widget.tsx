@@ -4,6 +4,7 @@ import { getControlsCfg, getSource, getVisVariables } from "../zoomdata/utils";
 import { inject } from "mobx-react";
 import { IZoomdata } from '../stores/Zoomdata';
 import { IWidgetStore } from "./WidgetContainer";
+import {runInAction} from "mobx";
 
 export interface IWidgetProps {
   template: string;
@@ -26,30 +27,33 @@ export default class Widget extends React.Component<IWidgetProps, {}> {
     return false;
   }
   componentDidMount() {
-    const self = this;
     const { zoomdata, widgetStore, template, sourceName } = this.props;
-    const source = zoomdata && (getSource(zoomdata.sources, sourceName));
-    widgetStore && (widgetStore.source = source);
-    const controlsCfg = getControlsCfg(source);
-    const visVariables = getVisVariables(source, template);
-    queryConfig.time = controlsCfg.timeControlCfg;
-    queryConfig.player = controlsCfg.playerControlCfg;
+    if (zoomdata && widgetStore) {
+      const source = getSource(zoomdata.sources, sourceName);
+      widgetStore.source = source;
+      const controlsCfg = getControlsCfg(source);
+      const visVariables = getVisVariables(source, template);
+      queryConfig.time = controlsCfg.timeControlCfg;
+      queryConfig.player = controlsCfg.playerControlCfg;
 
-    zoomdata && zoomdata.client.visualize({
-      element: this.node,
-      config: queryConfig,
-      source,
-      visualization: template,
-      variables: visVariables
-    }).then((visualization: any) => {
-      widgetStore && (widgetStore.visualization = visualization);
-      zoomdata.visualizations.push(visualization);
-      visualization.thread.on('thread:start', () => this.onQueryStart(visualization));
-      visualization.thread.on('thread:notDirtyData', () => this.onQueryComplete(visualization));
-      visualization.thread.on('thread:noData', () => this.onQueryComplete(visualization));
-    }).catch((error: string) => {
-      console.log(error);
-    })
+      zoomdata.client.visualize({
+        element: this.node,
+        config: queryConfig,
+        source,
+        visualization: template,
+        variables: visVariables
+      }).then((visualization: any) => {
+        runInAction('store reference to zoomdata visualization', () => {
+          widgetStore.visualization = visualization;
+          zoomdata.visualizations.push(visualization);
+          visualization.thread.on('thread:start', () => this.onQueryStart(visualization));
+          visualization.thread.on('thread:notDirtyData', () => this.onQueryComplete(visualization));
+          visualization.thread.on('thread:noData', () => this.onQueryComplete(visualization));
+        });
+      }).catch((error: string) => {
+        console.log(error);
+      })
+    }
   }
 
   onQueryStart = ((visualization: any) => {

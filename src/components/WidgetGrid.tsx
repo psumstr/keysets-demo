@@ -20,9 +20,11 @@ export default class WidgetGrid extends React.Component<{zoomdata?: IZoomdata}, 
 
   onWindowResize = () => {
     const { zoomdata } = this.props;
-    zoomdata && zoomdata.visualizations.forEach((visualization) => {
-      visualization.resize($(visualization.element.parentNode).width(), $(visualization.element.parentNode).height());
-    })
+    if (zoomdata) {
+      zoomdata.visualizations.forEach((visualization) => {
+        visualization.resize($(visualization.element.parentNode).width(), $(visualization.element.parentNode).height());
+      })
+    }
   };
 
   render() {
