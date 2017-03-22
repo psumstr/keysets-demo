@@ -62,3 +62,21 @@ body {
   display: flex;
   flex-shrink: 0;
 }
+
+.menu-container {
+  overflow-y: scroll;
+  max-height: 403px;
+  max-width: 200px;
+}
+
+.menu-spinner {
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+textarea:focus,
+span:focus::before,
+input:focus,
+button:focus {
+  outline: none;
+}

@@ -10,18 +10,26 @@ import {observer, Provider} from "mobx-react";
 export enum MenuItems {
   NONE,
   FILTERS,
-  ADDFILTER,
+  ADD_FILTER,
+  ATTRIBUTE_VALUES,
   KEYSETS
+}
+
+export interface IMenu {
+  active: MenuItems,
+  filters: IFiltersMenu
 }
 
 export interface IFiltersMenu {
   list: Array<IFilter>;
+  selectedField: any
 }
+
 export interface IWidgetStore {
-  source: any
+  source: any;
+  visualization: any;
   className: string;
-  selected: MenuItems;
-  filters: IFiltersMenu;
+  menu: IMenu
 }
 
 interface IWidgetContainerProps extends IWidgetProps{
@@ -32,10 +40,14 @@ interface IWidgetContainerProps extends IWidgetProps{
 export default class WidgetContainer extends React.Component<IWidgetContainerProps, {}> {
   @observable widgetStore: IWidgetStore = {
     source: observable.shallow({}),
+    visualization: observable.shallow({}),
     className: '',
-    selected: MenuItems.NONE,
-    filters: {
-      list: observable.shallow([])
+    menu: {
+      active: MenuItems.NONE,
+      filters: {
+        list: observable.shallow([]),
+        selectedField: observable.shallow({})
+      }
     }
   };
   constructor(props: IWidgetContainerProps) {

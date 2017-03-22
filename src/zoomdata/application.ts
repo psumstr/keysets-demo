@@ -1,9 +1,9 @@
 import {IApplication} from "ZoomdataSDK";
 
 const application: IApplication = {
-    secure: false,
+    secure: true,
     host: '2-5-latest.zoomdata.com',
-    port: 80,
+    port: 443,
     path: '/zoomdata'
 };
 

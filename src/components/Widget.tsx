@@ -17,15 +17,16 @@ export interface IWidgetProps {
 }))
 export default class Widget extends React.Component<IWidgetProps, {}> {
   node: HTMLDivElement;
-  componentWillReceiveProps(nextProps: any) {
+  static componentWillReceiveProps(nextProps: any) {
     if (!nextProps) {
       return;
     }
   }
-  shouldComponentUpdate() {
+  static shouldComponentUpdate() {
     return false;
   }
   componentDidMount() {
+    const self = this;
     const { zoomdata, widgetStore, template, sourceName } = this.props;
     const source = zoomdata && (getSource(zoomdata.sources, sourceName));
     widgetStore && (widgetStore.source = source);
@@ -41,23 +42,29 @@ export default class Widget extends React.Component<IWidgetProps, {}> {
       visualization: template,
       variables: visVariables
     }).then((visualization: any) => {
+      widgetStore && (widgetStore.visualization = visualization);
       zoomdata.visualizations.push(visualization);
-      visualization.thread.on('thread:start', () => {
-        $(visualization.element).parent().siblings('.widget-header').css('visibility', 'hidden');
-        $(visualization.element).parent().css('visibility', 'hidden');
-        $(visualization.element).css('visibility', 'hidden');
-        $(visualization.element).parent().siblings('.widget-spinner').show();
-      });
-      visualization.thread.on('thread:notDirtyData', () => {
-        $(visualization.element).parent().siblings('.widget-spinner').hide();
-        $(visualization.element).parent().siblings('.widget-header').css('visibility', 'visible');
-        $(visualization.element).parent().css('visibility', 'visible');
-        $(visualization.element).css('visibility', 'visible');
-      });
+      visualization.thread.on('thread:start', () => this.onQueryStart(visualization));
+      visualization.thread.on('thread:notDirtyData', () => this.onQueryComplete(visualization));
+      visualization.thread.on('thread:noData', () => this.onQueryComplete(visualization));
     }).catch((error: string) => {
       console.log(error);
     })
   }
+
+  onQueryStart = ((visualization: any) => {
+    $(visualization.element).parent().siblings('.widget-header').css('visibility', 'hidden');
+    $(visualization.element).parent().css('visibility', 'hidden');
+    $(visualization.element).css('visibility', 'hidden');
+    $(visualization.element).parent().siblings('.widget-spinner').show();
+  });
+
+  onQueryComplete = ((visualization: any) => {
+    $(visualization.element).parent().siblings('.widget-spinner').hide();
+    $(visualization.element).parent().siblings('.widget-header').css('visibility', 'visible');
+    $(visualization.element).parent().css('visibility', 'visible');
+    $(visualization.element).css('visibility', 'visible');
+  });
 
   render() {
     return <div className="chart" ref={node => this.node = node}></div>

@@ -9,7 +9,7 @@ import { IWidgetStore, MenuItems } from "./WidgetContainer";
 export default class WidgetMenu extends React.Component<{widgetStore?: IWidgetStore}, {}> {
   onFiltersClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { widgetStore } = this.props;
-    widgetStore && (widgetStore.selected = MenuItems.FILTERS);
+    widgetStore && (widgetStore.menu.active = MenuItems.FILTERS);
   };
   render() {
     return (

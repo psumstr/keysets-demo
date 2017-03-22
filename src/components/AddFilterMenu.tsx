@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {Menu, Button, Intent, MenuItem} from "@blueprintjs/core";
+import { Menu, Button, Intent, MenuItem } from "@blueprintjs/core";
 import { MenuItems, IWidgetStore } from "./WidgetContainer";
-import { inject, observer } from "mobx-react";
+import { inject } from "mobx-react";
 
 @inject(stores => ({
   widgetStore: stores.widgetStore as IWidgetStore
@@ -9,20 +9,29 @@ import { inject, observer } from "mobx-react";
 export default class AddFilterMenu extends React.Component<{widgetStore?: IWidgetStore}, {}> {
   onBackButtonClick = () => {
     const { widgetStore } = this.props;
-    widgetStore && (widgetStore.selected = MenuItems.FILTERS);
+    widgetStore && (widgetStore.menu.active = MenuItems.FILTERS);
   };
 
-  getAttributeMenuItem  = (field: any) => {
+  onItemClick = (field: any) => {
+    const { widgetStore } = this.props;
+    widgetStore && (widgetStore.menu.active = MenuItems.ATTRIBUTE_VALUES);
+    widgetStore && (widgetStore.menu.filters.selectedField = field);
+  };
+
+  getAttributeMenuItem = (field: any) => {
     return (
       <MenuItem
+        key={field.name}
         iconName="plus"
+        shouldDismissPopover={false}
+        onClick={() => this.onItemClick(field)}
         text={field.label} />
     )
   };
 
   render() {
     const { widgetStore } = this.props;
-    const attributeFileds = widgetStore &&
+    const attributeFields = widgetStore &&
       widgetStore.source.objectFields.filter((field: any) => field.type === 'ATTRIBUTE');
     return (
       <Menu>
@@ -36,7 +45,7 @@ export default class AddFilterMenu extends React.Component<{widgetStore?: IWidge
           Add Filter
         </h6>
         <li className="pt-menu-header"><div>Attributes</div></li>
-        {attributeFileds.map(this.getAttributeMenuItem)}
+        {attributeFields.map(this.getAttributeMenuItem)}
       </Menu>
     )
   }

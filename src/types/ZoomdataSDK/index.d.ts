@@ -6,11 +6,11 @@ declare module 'ZoomdataSDK' {
     path: string;
   }
   interface ISecurityKey {
-    key: string;
+    key?: string;
   }
 
   interface  IAccessToken {
-    access_token: string;
+    access_token?: string;
   }
 
   interface IClientConfig {
@@ -29,7 +29,7 @@ declare module 'ZoomdataSDK' {
   interface IFilter {
     path: string;
     operation: string;
-    values: Array<string | number>
+    value: Array<string | number>
   }
   function createClient(config: IClientConfig): Promise<any>
 }

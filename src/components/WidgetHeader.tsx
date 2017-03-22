@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { Popover, Position, Button } from '@blueprintjs/core';
-import WidgetMenu from "./WidgetMenu";
-import { inject, observer } from "mobx-react";
-import ActiveFiltersMenu from "./ActiveFiltersMenu";
-import { IWidgetStore, MenuItems } from "./WidgetContainer";
-import AddFilterMenu from "./AddFilterMenu";
+import WidgetMenu from './WidgetMenu';
+import { inject, observer } from 'mobx-react';
+import ActiveFiltersMenu from './ActiveFiltersMenu';
+import { IWidgetStore, MenuItems } from './WidgetContainer';
+import AddFilterMenu from './AddFilterMenu';
+import AttributeValuesMenu from './AttributeValuesMenu';
 
 interface IWidgetTitle {
   title: string;
@@ -22,34 +23,29 @@ export default class WidgetHeader extends React.Component<IWidgetTitle, {}> {
   };
   getPopoverContent = () => {
     const { widgetStore } = this.props;
-    let content;
-    switch (widgetStore && widgetStore.selected) {
+    switch (widgetStore && widgetStore.menu.active) {
       case MenuItems.FILTERS:
-        content = <ActiveFiltersMenu />;
-        break;
-      case MenuItems.ADDFILTER:
-        content = <AddFilterMenu />;
-        break;
+        return <ActiveFiltersMenu />;
+      case MenuItems.ADD_FILTER:
+        return <AddFilterMenu />;
+      case MenuItems.ATTRIBUTE_VALUES:
+        return <AttributeValuesMenu />;
       case MenuItems.NONE:
       default:
-        content = <WidgetMenu />;
-        break;
+        return <WidgetMenu />;
     }
-    return content;
   };
 
-  onPopoverClose = () => {
+  onPopoverWillClose = () => {
     const { widgetStore } = this.props;
-    widgetStore && (widgetStore.selected = MenuItems.NONE);
+    widgetStore && (widgetStore.menu.active = MenuItems.NONE);
   };
 
   renderHeaderControls = () => {
     return <div className="widget-header-controls">
       <Popover
-        className="menu-popover"
-        lazy={true}
         content={this.getPopoverContent()}
-        onClose={this.onPopoverClose}
+        popoverWillClose={this.onPopoverWillClose}
         position={Position.LEFT_TOP} >
         <Button
           className="pt-minimal"

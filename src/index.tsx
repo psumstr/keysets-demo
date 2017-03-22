@@ -6,23 +6,21 @@ import * as ReactDOM from 'react-dom';
 import App from './components/App';
 import { Provider } from "mobx-react";
 import  { Zoomdata } from "./stores";
-import { AppContainer } from "react-hot-loader";
 
 const root = document.getElementById('root');
 const zoomdata = new Zoomdata();
 
 ReactDOM.render(
-    <AppContainer>
-      <Provider
-        zoomdata={zoomdata}>
-        <App />
-      </Provider>
-    </AppContainer>,
+  <Provider
+    zoomdata={zoomdata}>
+    <App />
+  </Provider>,
   root
 );
 
 if (module.hot) {
   module.hot.accept('./components/App', () => {
+    const AppContainer = require('react-hot-loader').AppContainer;
     const NextApp = require('./components/App').default;
     ReactDOM.render(
       <AppContainer>
