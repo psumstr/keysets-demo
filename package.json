@@ -6,7 +6,8 @@
     "start": "webpack-dev-server --env development",
     "build": "webpack --env production",
     "lint:js": "eslint . --cache",
-    "lint:style": "stylelint app/**/*.css"
+    "lint:style": "stylelint app/**/*.css",
+    "stats": "webpack --env production --profile --json > stats.json"
   },
   "keywords": [],
   "author": "Jonathan Avila <avilajonathan@gmail.com>",
@@ -45,6 +46,7 @@
     "typescript": "^2.2.1",
     "url-loader": "^0.5.8",
     "webpack": "^2.2.1",
+    "webpack-bundle-analyzer": "^2.3.1",
     "webpack-dev-server": "^2.4.1",
     "webpack-merge": "^4.1.0"
   },
@@ -55,7 +57,6 @@
     "@types/react": "^15.0.14",
     "@types/react-addons-css-transition-group": "^15.0.1",
     "@types/react-dom": "^0.14.23",
-    "jquery": "^3.1.1",
     "mobx": "^3.1.7",
     "mobx-react": "^4.1.3",
     "mobx-utils": "^2.0.1",

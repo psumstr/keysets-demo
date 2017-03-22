@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const glob = require('glob');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const parts = require('./webpack.parts');
 
@@ -54,6 +55,7 @@ const productionConfig = merge([
     },
     plugins: [
       new webpack.HashedModuleIdsPlugin(),
+      new BundleAnalyzerPlugin(),
     ],
     recordsPath: 'records.json',
   },
